@@ -1,0 +1,29 @@
+body{
+    background-color:rgb(50, 135, 168);
+    font-family: 'Marcellus', serif;
+    display: flex;
+    height: 100vh;
+}
+
+img {
+    margin-left: 100px;
+    border-radius: 30%;
+    justify-content: flex-end;
+    align-items: flex-end;
+    width: 700px;
+  }
+
+h1{
+    font-size: 100px;
+
+}
+
+p{
+    font-style: italic;
+    font-size: 30px;
+}
+
+.links{
+    align-items: flex-end;
+}
+

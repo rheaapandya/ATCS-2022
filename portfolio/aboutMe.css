@@ -1,0 +1,43 @@
+body{
+    background-color: rgb(188, 33, 0);
+    flex-direction: column;
+    font-family: 'Marcellus', serif;
+}
+
+.images{
+
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    margin-bottom: 30px;
+}
+
+.zebra{
+    width: 450px;
+    height: 500px;
+}
+img{
+    width: 340px;
+    height: 500px;
+    border-radius: 30%;
+
+}
+p{
+    margin-left: 200px;
+    margin-right: 200px;
+    text-align: center;
+    font-size: 20px;
+}
+h1{
+    align-items: flex-start;
+    text-align: center;
+    color: black;
+    -webkit-text-stroke: 1px white;
+    font-size: 50px;
+}
+
+hr{
+   height: 10px;
+   background-color: white;
+   width: 100%;
+}
