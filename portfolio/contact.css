@@ -1,0 +1,24 @@
+body {
+    background-color: #ffcb6a;
+    font-family: 'Marcellus', serif;
+}
+
+hr {
+    height: 10px;
+    background-color: white;
+    width: 100%;
+}
+.links {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+li{
+    text-align: center
+}
+
+h1 {
+    text-align: center;
+    font-size: 50px;
+}

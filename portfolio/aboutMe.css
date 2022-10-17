@@ -1,10 +1,10 @@
-body{
-    background-color: 	#DDC7A0;
+body {
+    background-color: #DDC7A0;
     flex-direction: column;
     font-family: 'Marcellus', serif;
 }
 
-.images{
+.images {
 
     display: flex;
     flex-direction: row;
@@ -16,32 +16,34 @@ body{
     width: 450px;
     height: 500px;
 } */
-img{
+img {
     width: 440px;
     height: 500px;
     border-radius: 30%;
 
 }
-p{
+
+p {
     margin-left: 200px;
     margin-right: 200px;
     text-align: center;
     font-size: 20px;
 }
-h1{
+
+h1 {
     align-items: flex-start;
     text-align: center;
     color: black;
     font-size: 50px;
 }
 
-hr{
-   height: 10px;
-   background-color: white;
-   width: 100%;
+hr {
+    height: 10px;
+    background-color: white;
+    width: 100%;
 }
 
-.links{
+.links {
     margin-top: 10px;
 }
 
@@ -50,7 +52,7 @@ hr{
     justify-content: space-around;
 } */
 
-.links{
+.links {
     display: flex;
     flex-direction: row;
     justify-content: space-around;

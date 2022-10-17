@@ -1,5 +1,5 @@
-body{
-    background-color:rgb(50, 135, 168);
+body {
+    background-color: rgb(50, 135, 168);
     font-family: 'Marcellus', serif;
     display: flex;
     height: 100vh;
@@ -12,21 +12,20 @@ img {
     justify-content: flex-end;
     align-items: flex-end;
     width: 700px;
-  }
+}
 
-h1{
+h1 {
     font-size: 100px;
 
 }
 
-p{
+p {
     font-style: italic;
     font-size: 30px;
 }
 
-.links{
+.links {
     align-items: flex-end;
 
     color: black;
 }
-
