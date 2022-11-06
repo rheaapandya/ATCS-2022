@@ -1,0 +1,20 @@
+body {
+    background-color: #ffd7f9;
+    font-family: 'Marcellus', serif;
+}
+
+
+h1 {
+    text-align: center;
+    padding-top: 50px;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+.navbar {
+    z-index: 1;
+}

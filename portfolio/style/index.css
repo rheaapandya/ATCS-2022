@@ -1,31 +1,28 @@
 body {
     background-color: rgb(50, 135, 168);
     font-family: 'Marcellus', serif;
-    display: flex;
+    text-align: center;
     height: 100vh;
     color: black;
 }
 
 img {
-    margin-left: 100px;
     border-radius: 30%;
-    justify-content: flex-end;
-    align-items: flex-end;
     width: 700px;
+    height: 650px;
 }
 
 h1 {
-    font-size: 100px;
+    padding-top: 50px;
+}
 
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
 }
 
 p {
     font-style: italic;
     font-size: 30px;
-}
-
-.links {
-    align-items: flex-end;
-
-    color: black;
 }
