@@ -1,0 +1,28 @@
+body {
+    background-color: rgb(50, 135, 168);
+    font-family: 'Marcellus', serif;
+    text-align: center;
+    height: 100vh;
+    color: black;
+}
+
+img {
+    border-radius: 30%;
+    width: 700px;
+    height: 650px;
+}
+
+h1 {
+    padding-top: 50px;
+}
+
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
+p {
+    font-style: italic;
+    font-size: 30px;
+}
