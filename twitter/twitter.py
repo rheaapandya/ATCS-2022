@@ -3,6 +3,8 @@ from database import init_db, db_session
 from datetime import datetime
 
 class Twitter:
+    def __init__(self):
+        self.current_user = None
     """
     The menu to print once a user has logged in
     """
@@ -38,25 +40,57 @@ class Twitter:
     is guaranteed to be logged in after this function.
     """
     def register_user(self):
-        pass
+        username = input("Enter username: ")
+        user = db_session.query(User).where(User.username == username).first()
+        while user != None:
+            print("Username is already taken try again")
+            username = input("Enter username: ")
+            user = db_session.query(User).where(User.username == username).first()
+        password_check1 = input("Password: ")
+        password_check2 = input("Same Password Again: ")
+        while password_check1 != password_check2:
+            print("Your passwords did not match, try again.")
+            password_check1 = input("Password: ")
+            password_check2 = input("Same Password Again: ")  
+        user = User(username = username, password = password_check1)
+        db_session.add(user)
+        db_session.commit()
+
+                
 
     """
     Logs the user in. The user
     is guaranteed to be logged in after this function.
     """
     def login(self):
-        pass
+        username = input("Enter username: ")
+        password = input("Password: ")
+        user = db_session.query(User).filter_by(username == User.username, password == User.password).first()
+        while user == None:
+            print("Invalid username or password")
+            username = input("Enter username: ")
+            input_password = input("Password: ")
+        self.current_user = user
+        print("Login Succesful")
+
 
     
     def logout(self):
-        pass
+        self.current_user = None
+        self.end
 
     """
     Allows the user to login,  
     register, or exit.
     """
     def startup(self):
-        pass
+        mode = input("Welcome to ATCS Twitter! \nPlease select a Menu Option\n1. Login\n2. Register User\n0. Exit\n")
+        if mode == str(1):
+            self.login()
+        elif mode == str(2):
+            self.register_user()
+        else:
+            self.logout()
 
     def follow(self):
         pass
