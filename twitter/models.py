@@ -47,7 +47,10 @@ class Tweet(Base):
     timestamp = Column("timestap", TEXT, nullable = False)
     tags = relationship("Tag", secondary = "tweettags", back_populates = "tweets")
     def __repr__(self):
-        return "@" + self.username + "\n" + self.content + "\n" + self.timestamp
+        tags = ""
+        for tag in self.tags:
+            tags += str(tag) + " "
+        return "@" + self.username + "\n" + self.content + "\n" + self.timestamp + "\n" + tags
 
         
 
@@ -57,8 +60,10 @@ class Tag(Base):
     id = Column("id", INTEGER, primary_key=True)
     content = Column("content", TEXT, nullable = False)
     tweets = relationship("Tweet", secondary = "tweettags", back_populates = "tags")
+    def __init__(self, content):
+        self.content = content
     def __repr__(self):
-        return "#" + self.content
+        return self.content
 
 class TweetTag(Base):
     # TODO: Complete the class

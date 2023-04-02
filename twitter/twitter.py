@@ -55,6 +55,7 @@ class Twitter:
         user = User(username = username, password = password_check1)
         db_session.add(user)
         db_session.commit()
+        self.current_user = user
 
                 
 
@@ -64,12 +65,13 @@ class Twitter:
     """
     def login(self):
         username = input("Enter username: ")
-        password = input("Password: ")
-        user = db_session.query(User).filter_by(username == User.username, password == User.password).first()
+        input_password = input("Password: ")
+        user = db_session.query(User).where((username == User.username) & (input_password == User.password)).first()
         while user == None:
             print("Invalid username or password")
             username = input("Enter username: ")
             input_password = input("Password: ")
+            user = db_session.query(User).where((username == User.username) & (input_password == User.password)).first()
         self.current_user = user
         print("Login Succesful")
 
@@ -93,29 +95,77 @@ class Twitter:
             self.logout()
 
     def follow(self):
-        pass
+        followUsername = input("Who would you like to follow? ")
+        user = db_session.query(User).where(User.username == followUsername).first()
+        for user in self.current_user.following:
+            print ("You are already following " + followUsername)
+        else:
+            follower = Follower(follower_id = self.current_user.username, following_id = followUsername)
+            db_session.add(follower)
+            db_session.commit()
+            print("You are now following " + followUsername)
+      
 
     def unfollow(self):
-        pass
+        followUsername = input("Who would you like to unfollow? ")
+        user = db_session.query(User).where(User.username == followUsername).first()
+        for user in self.current_user.following:
+            follower = db_session.query(Follower).where((self.current_user.username == Follower.follower_id) & (followUsername == Follower.following_id)).first()
+            db_session.delete(follower)
+            db_session.commit()
+            print ("You are no longer following " + followUsername)
+        else:
+            print("You are not following " + followUsername)
 
     def tweet(self):
-        pass
-    
+        tweetContent = input("Create Tweet: ")
+        tags = input("Enter your tags seperated by spaces: ")
+        newTweet = Tweet(content = tweetContent, username = self.current_user.username, timestamp = datetime.now())
+        db_session.add(newTweet)
+        db_session.commit()
+        tweet = db_session.query(Tweet).where(Tweet.content == tweetContent).first()
+        tweetID = tweet.id
+        tags = tags.split()
+        for i in tags:
+            if db_session.query(Tag).where(Tag.content == i).first() == None:
+                tag = Tag(i)
+                db_session.add(tag)
+                db_session.commit()
+            else:
+                tag = db_session.query(Tag).where(Tag.content == i).first()
+            tweetTag = TweetTag(tag_id = tag.id, tweet_id = tweetID)
+            db_session.add(tweetTag)
+            db_session.commit()
+
+
     def view_my_tweets(self):
-        pass
+        tweets = db_session.query(Tweet).where(Tweet.username == self.current_user.username)
+        self.print_tweets(tweets)
     
     """
     Prints the 5 most recent tweets of the 
     people the user follows
     """
     def view_feed(self):
-        pass
+        tweets = db_session.query(Tweet).order_by(Tweet.timestamp).limit(5)
+        self.print_tweets(tweets)
 
     def search_by_user(self):
-        pass
+        username = input("Whose tweets would you like to see? ")
+        if db_session.query(User).where(User.username == username).first() != None:
+            tweets = db_session.query(Tweet).where(Tweet.username == username)
+            self.print_tweets(tweets)
+        else:
+            print("There is no user by that name")
 
     def search_by_tag(self):
-        pass
+        searchTag = input("What tag would you like to see? ")
+        tag = db_session.query(Tag).where(Tag.content == searchTag).first()
+        if  tag != None:
+            tweets = db_session.query(TweetTag, Tweet).join(Tweet, Tweet.id == TweetTag.tweet_id).where(TweetTag.tag_id == tag.id)
+            self.print_tweets(tweets)
+        else:
+            print("There is no tag by that name")
 
     """
     Allows the user to select from the 
@@ -126,25 +176,26 @@ class Twitter:
 
         print("Welcome to ATCS Twitter!")
         self.startup()
+        while self.current_user != None:
 
-        self.print_menu()
-        option = int(input(""))
+            self.print_menu()
+            option = int(input(""))
 
-        if option == 1:
-            self.view_feed()
-        elif option == 2:
-            self.view_my_tweets()
-        elif option == 3:
-            self.search_by_tag()
-        elif option == 4:
-            self.search_by_user()
-        elif option == 5:
-            self.tweet()
-        elif option == 6:
-            self.follow()
-        elif option == 7:
-            self.unfollow()
-        else:
-            self.logout()
+            if option == 1:
+                self.view_feed()
+            elif option == 2:
+                self.view_my_tweets()
+            elif option == 3:
+                self.search_by_tag()
+            elif option == 4:
+                self.search_by_user()
+            elif option == 5:
+                self.tweet()
+            elif option == 6:
+                self.follow()
+            elif option == 7:
+                self.unfollow()
+            else:
+                self.logout()
         
         self.end()
