@@ -151,7 +151,6 @@ class Twitter:
     people the user follows
     """
     def view_feed(self):
-        tweets = []
         # gets followers
         for following in self.current_user.following:
             # gets their tweets
