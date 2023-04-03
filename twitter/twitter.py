@@ -118,13 +118,16 @@ class Twitter:
             print("You are not following " + followUsername)
 
     def tweet(self):
+        # gets a tweet and tags
         tweetContent = input("Create a Tweet: ")
         tags = input("Enter your tags seperated by spaces: ")
+        # makes the tweet and commits it
         newTweet = Tweet(content = tweetContent, username = self.current_user.username, timestamp = datetime.now())
         db_session.add(newTweet)
         db_session.commit()
         tweet = db_session.query(Tweet).where(Tweet.content == tweetContent).first()
         tweetID = tweet.id
+        # makes the tags and commits it and tweettags
         tags = tags.split()
         for i in tags:
             if db_session.query(Tag).where(Tag.content == i).first() == None:
@@ -139,6 +142,7 @@ class Twitter:
 
 
     def view_my_tweets(self):
+        # gets all users tweets
         tweets = db_session.query(Tweet).where(Tweet.username == self.current_user.username)
         self.print_tweets(tweets)
     
@@ -148,13 +152,17 @@ class Twitter:
     """
     def view_feed(self):
         tweets = []
+        # gets followers
         for following in self.current_user.following:
+            # gets their tweets
             user_tweets = db_session.query(Tweet).where(Tweet.username == following.username).order_by(Tweet.timestamp.desc()).limit(5)
             self.print_tweets(user_tweets)
 
 
     def search_by_user(self):
+        # gets username
         username = input("Whose tweets would you like to see? ")
+        # checks if user exists
         if db_session.query(User).where(User.username == username).first() != None:
             tweets = db_session.query(Tweet).where(Tweet.username == username)
             self.print_tweets(tweets)
@@ -162,8 +170,10 @@ class Twitter:
             print("There is no user by that name")
 
     def search_by_tag(self):
+        # gets tag
         searchTag = input("What tag would you like to see? ")
         tag = db_session.query(Tag).where(Tag.content == searchTag).first()
+        # checks if tag exists
         if  tag != None:
             tweets = db_session.query(TweetTag, Tweet).join(Tweet, Tweet.id == TweetTag.tweet_id).where(TweetTag.tag_id == tag.id)
             self.print_tweets(tweets)
