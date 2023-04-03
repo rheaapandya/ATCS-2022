@@ -147,8 +147,11 @@ class Twitter:
     people the user follows
     """
     def view_feed(self):
-        tweets = db_session.query(Tweet).order_by(Tweet.timestamp).limit(5)
-        self.print_tweets(tweets)
+        tweets = []
+        for following in self.current_user.following:
+            user_tweets = db_session.query(Tweet).where(Tweet.username == following.username).order_by(Tweet.timestamp.desc()).limit(5)
+            self.print_tweets(user_tweets)
+
 
     def search_by_user(self):
         username = input("Whose tweets would you like to see? ")
