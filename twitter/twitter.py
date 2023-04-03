@@ -118,7 +118,7 @@ class Twitter:
             print("You are not following " + followUsername)
 
     def tweet(self):
-        tweetContent = input("Create Tweet: ")
+        tweetContent = input("Create a Tweet: ")
         tags = input("Enter your tags seperated by spaces: ")
         newTweet = Tweet(content = tweetContent, username = self.current_user.username, timestamp = datetime.now())
         db_session.add(newTweet)
